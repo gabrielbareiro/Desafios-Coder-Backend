@@ -1,0 +1,9 @@
+[
+  {
+    "title": "Producto Prueba",
+    "photo": "Ruta de la foto",
+    "price": 200,
+    "stock": 25,
+    "id": 1
+  }
+]
