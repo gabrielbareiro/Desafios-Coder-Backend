@@ -1,4 +1,5 @@
 import fs, { readFileSync } from "fs";
+import crypto from "crypto";
 
 class UserManager {
   constructor(path) {
@@ -21,24 +22,20 @@ class UserManager {
 
   async create(user) {
     try {
-      const dataFile = JSON.parse(
-        await fs.promises.readFile(this.path, "utf-8")
-      );
       if (
-        dataFile.some((e) => e.email === user.email) !== true &&
+        this.users.some((e) => e.email === user.email) !== true &&
         user.name !== "" &&
         user.photo !== ""
       ) {
-        const data = dataFile
-          ? [...dataFile, { ...user, id: dataFile.length + 1 }]
-          : [{ ...user, id: dataFile.length + 1 }];
+        const id = crypto.randomBytes(12).toString("hex");
+        const data = [...this.users, { ...user, id: id }];
         const writeData = await fs.promises.writeFile(
           this.path,
           JSON.stringify(data, null, 2)
         );
-        console.log(`Usuario agregado con el id: ${dataFile.length + 1}`);
+        console.log(`Usuario agregado con el id: ${id}`);
       } else {
-        const log = dataFile.some((e) => e.email === user.email)
+        const log = this.users.some((e) => e.email === user.email)
           ? console.log("Este email ya esta registrado")
           : console.log("Todos los campos son obligatorios");
       }
@@ -51,11 +48,8 @@ class UserManager {
 
   async read() {
     try {
-      const dataFile = JSON.parse(
-        await fs.promises.readFile(this.path, "utf-8")
-      );
-      if (dataFile.length) {
-        return console.log(dataFile);
+      if (this.users) {
+        return console.log(this.users);
       } else {
         console.log("No hay usuarios");
       }
@@ -68,10 +62,7 @@ class UserManager {
 
   async readOne(id) {
     try {
-      const dataFile = JSON.parse(
-        await fs.promises.readFile(this.path, "utf-8")
-      );
-      const user = dataFile.find((user) => user.id === id);
+      const user = this.users.find((user) => user.id === id);
       if (user) {
         return console.log(user);
       } else {
@@ -85,12 +76,12 @@ class UserManager {
 
 let users = new UserManager("./src/fs/data/users.Fs.json");
 
-// users.create({
-//   name: "nombre",
-//   photo: "ruta de la foto",
-//   email: "email de prueba",
-// });
+users.create({
+  name: "nombre",
+  photo: "ruta de la foto",
+  email: "email de prueba2",
+});
 
-//users.read();
+users.read();
 
-//users.readOne(1);
+users.readOne("4fa1a4442772f36aab2620f8");

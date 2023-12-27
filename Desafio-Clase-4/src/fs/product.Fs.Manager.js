@@ -1,4 +1,5 @@
 import fs, { readFileSync } from "fs";
+import crypto from "crypto";
 
 class ProductManager {
   constructor(path) {
@@ -20,23 +21,19 @@ class ProductManager {
 
   async create(product) {
     try {
-      const dataFile = JSON.parse(
-        await fs.promises.readFile(this.path, "utf-8")
-      );
       if (
         product.title !== "" &&
         product.photo !== "" &&
         product.price >= 0 &&
         product.stock >= 0
       ) {
-        const data = dataFile
-          ? [...dataFile, { ...product, id: dataFile.length + 1 }]
-          : [{ ...product, id: dataFile.length + 1 }];
+        const id = crypto.randomBytes(12).toString("hex");
+        const data = [...this.products, { ...product, id: id }];
         const writeData = await fs.promises.writeFile(
           this.path,
           JSON.stringify(data, null, 2)
         );
-        console.log(`Producto agregado con el id: ${dataFile.length + 1}`);
+        console.log(`Producto agregado con el id: ${id}`);
       } else {
         console.log("Todos los campos son obligatorios");
       }
@@ -49,11 +46,8 @@ class ProductManager {
 
   async read() {
     try {
-      const dataFile = JSON.parse(
-        await fs.promises.readFile(this.path, "utf-8")
-      );
-      if (dataFile.length) {
-        return console.log(dataFile);
+      if (this.products) {
+        return console.log(this.products);
       } else {
         console.log("No hay productos");
       }
@@ -66,10 +60,7 @@ class ProductManager {
 
   async readOne(id) {
     try {
-      const dataFile = JSON.parse(
-        await fs.promises.readFile(this.path, "utf-8")
-      );
-      const product = dataFile.find((product) => product.id === id);
+      const product = this.products.find((product) => product.id === id);
       if (product) {
         return console.log(product);
       } else {
@@ -85,12 +76,12 @@ class ProductManager {
 let products = new ProductManager("./src/fs/data/products.Fs.json");
 
 // products.create({
-//   title: "Producto Prueba",
-//   photo: "Ruta de la foto",
+//   title: "Producto Prueba1",
+//   photo: "Ruta de la foto1",
 //   price: 200,
 //   stock: 25,
 // });
 
 //products.read();
 
-products.readOne(1);
+products.readOne("aa8a043e85a6161f37a37b77");

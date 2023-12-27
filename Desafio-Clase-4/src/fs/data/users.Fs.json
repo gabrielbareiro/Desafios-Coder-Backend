@@ -4,5 +4,11 @@
     "photo": "ruta de la foto",
     "email": "email de prueba",
     "id": 1
+  },
+  {
+    "name": "nombre",
+    "photo": "ruta de la foto",
+    "email": "email de prueba2",
+    "id": "4fa1a4442772f36aab2620f8"
   }
 ]

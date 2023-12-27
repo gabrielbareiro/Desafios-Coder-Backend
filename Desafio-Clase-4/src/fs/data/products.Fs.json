@@ -1,9 +1,65 @@
 [
   {
-    "title": "Producto Prueba",
-    "photo": "Ruta de la foto",
+    "title": "Producto Prueba1",
+    "photo": "Ruta de la foto1",
     "price": 200,
     "stock": 25,
-    "id": 1
+    "id": "cb25e6146f31e8a4122419e1"
+  },
+  {
+    "title": "Producto Prueba1",
+    "photo": "Ruta de la foto1",
+    "price": 200,
+    "stock": 25,
+    "id": "9480ba708784d58af6cc2b22"
+  },
+  {
+    "title": "Producto Prueba1",
+    "photo": "Ruta de la foto1",
+    "price": 200,
+    "stock": 25,
+    "id": "816f5c313d0241824a23b13f"
+  },
+  {
+    "title": "Producto Prueba1",
+    "photo": "Ruta de la foto1",
+    "price": 200,
+    "stock": 25,
+    "id": "80fbe41c267f769b45880fb6"
+  },
+  {
+    "title": "Producto Prueba1",
+    "photo": "Ruta de la foto1",
+    "price": 200,
+    "stock": 25,
+    "id": "24563cb04d1edccf69faac71"
+  },
+  {
+    "title": "Producto Prueba1",
+    "photo": "Ruta de la foto1",
+    "price": 200,
+    "stock": 25,
+    "id": "4f4e19e4c5e4dcca4c7c186f"
+  },
+  {
+    "title": "Producto Prueba1",
+    "photo": "Ruta de la foto1",
+    "price": 200,
+    "stock": 25,
+    "id": "d250f81c1a09f4cbf5544a74"
+  },
+  {
+    "title": "Producto Prueba1",
+    "photo": "Ruta de la foto1",
+    "price": 200,
+    "stock": 25,
+    "id": "aa8a043e85a6161f37a37b77"
+  },
+  {
+    "title": "Producto Prueba1",
+    "photo": "Ruta de la foto1",
+    "price": 200,
+    "stock": 25,
+    "id": "294390e38b743f09c4b2ddc1"
   }
 ]
