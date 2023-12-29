@@ -1,4 +1,4 @@
-import fs, { readFileSync } from "fs";
+import fs from "fs";
 import crypto from "crypto";
 
 class ProductManager {
@@ -10,7 +10,7 @@ class ProductManager {
   init() {
     const file = fs.existsSync(this.path);
     if (file) {
-      this.products = JSON.parse(readFileSync(this.path, "utf-8"));
+      this.products = JSON.parse(fs.readFileSync(this.path, "utf-8"));
     } else {
       fs.writeFileSync(this.path, JSON.stringify([], null, 2));
       console.log(this.products);
@@ -34,10 +34,12 @@ class ProductManager {
           JSON.stringify(data, null, 2)
         );
         console.log(`Producto agregado con el id: ${id}`);
+        return id;
       } else {
         console.log("Todos los campos son obligatorios");
       }
     } catch (error) {
+      console.log(error);
       return error.message;
     }
   }
@@ -47,11 +49,12 @@ class ProductManager {
   async read() {
     try {
       if (this.products) {
-        return console.log(this.products);
+        return this.products;
       } else {
         console.log("No hay productos");
       }
     } catch (error) {
+      console.log(error);
       return error.message;
     }
   }
@@ -60,28 +63,40 @@ class ProductManager {
 
   async readOne(id) {
     try {
-      const product = this.products.find((product) => product.id === id);
+      const product = this.products.find((p) => p.id === id);
       if (product) {
-        return console.log(product);
+        return product;
       } else {
         console.log(`No se encontro el producto con el id ${id}`);
         return null;
       }
     } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  }
+
+  //___________________ Elimino un producto por su id ___________________
+
+  async destroy(id) {
+    try {
+      const product = this.products.find((p) => p.id === id);
+      if (product) {
+        this.products = this.products.filter((p) => p.id !== id);
+        await fs.promises.writeFile(
+          this.path,
+          JSON.stringify(this.products, null, 2)
+        );
+        console.log("eliminado con exito");
+        return product;
+      } else {
+        console.log("No hay un producto con ese id");
+      }
+    } catch (error) {
+      console.log(error);
       return error.message;
     }
   }
 }
 
-let products = new ProductManager("./src/fs/data/products.Fs.json");
-
-// products.create({
-//   title: "Producto Prueba1",
-//   photo: "Ruta de la foto1",
-//   price: 200,
-//   stock: 25,
-// });
-
-//products.read();
-
-products.readOne("aa8a043e85a6161f37a37b77");
+export default ProductManager;
