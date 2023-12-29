@@ -28,12 +28,8 @@ app
   .get("/api/users", async (req, res) => {
     try {
       const dataUsers = await users.read();
-      if (dataUsers) {
-        console.log("envio productos");
-        return res.json(dataUsers);
-      } else {
-        return res.json({ success: false, message: "not found" });
-      }
+      if (!dataUsers) return res.send({ success: false, message: "not found" });
+      res.json(dataUsers);
     } catch (error) {
       console.log(error);
       return res.json({ statusCode: 500, message: error.message });
@@ -43,11 +39,9 @@ app
     try {
       const { pid } = req.params;
       const dataProducts = await products.readOne(pid);
-      if (dataProducts) {
-        return res.json(dataProducts);
-      } else {
-        return res.json({ success: false, message: "not found" });
-      }
+      if (!dataProducts)
+        return res.send({ success: false, message: "not found" });
+      res.json(dataProducts);
     } catch (error) {
       console.log(error);
       return res.json({ statusCode: 500, message: error.message });
@@ -57,11 +51,8 @@ app
     try {
       const { uid } = req.params;
       const dataUsers = await products.readOne(uid);
-      if (dataUsers) {
-        return res.json(dataUsers);
-      } else {
-        return res.json({ success: false, message: "not found" });
-      }
+      if (!dataUsers) return res.send({ success: false, message: "not found" });
+      res.json(dataUsers);
     } catch (error) {
       console.log(error);
       return res.json({ statusCode: 500, message: error.message });
