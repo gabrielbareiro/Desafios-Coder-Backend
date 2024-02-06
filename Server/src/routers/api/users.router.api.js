@@ -1,56 +1,58 @@
 import { Router } from "express";
-import products from "../../fs/product.Fs.Manager.js";
-import propsProducts from "../../middlewares/propsProducts.mid.js";
-
+import users from "../../fs/user.Fs.Manager.js";
+import propsUser from "../../middlewares/propsUsers.mid.js";
 const router = Router();
 
 router
-  .post("/", propsProducts, async (req, res, next) => {
+  .post("/", propsUser, async (req, res, next) => {
     try {
       const data = req.body;
-      const response = await products.create(data);
-      return res.json({ statusCode: 201, response });
+      const response = await users.create(data);
+      return res.json({
+        statusCode: 201,
+        response: "user created successfully!",
+      });
     } catch (error) {
       return next(error);
     }
   })
   .get("/", async (req, res, next) => {
     try {
-      const all = await products.read();
+      const all = await users.read();
       return res.json({ statusCode: 200, response: all });
     } catch (error) {
       return next(error);
     }
   })
-  .get("/:pid", async (req, res, next) => {
+  .get("/:uid", async (req, res, next) => {
     try {
-      const { pid } = req.params;
-      console.log(pid);
-      const one = await products.readOne(pid);
+      const { uid } = req.params;
+      const one = await users.readOne(uid);
       return res.json({ statusCode: 200, response: one });
     } catch (error) {
-      return next(error);
+      next(error);
     }
   })
-  .put("/:pid", async (req, res, next) => {
+  .put("/:uid", async (req, res, next) => {
     try {
       const {
         body,
-        params: { pid },
+        params: { uid },
       } = req;
-      const one = await products.update(pid, body);
+      const one = await users.update(uid, body);
       return res.json({ statusCode: 200, message: "Updated successfully" });
     } catch (error) {
       return next(error);
     }
   })
-  .delete("/:pid", async (req, res, next) => {
+  .delete("/:uid", async (req, res, next) => {
     try {
-      const { pid } = req.params;
-      const one = await products.destroy(pid);
+      const { uid } = req.params;
+      const one = await users.destroy(uid);
       return res.json({ statusCode: 200, message: "successfully removed" });
     } catch (error) {
       return next(error);
     }
   });
+
 export default router;

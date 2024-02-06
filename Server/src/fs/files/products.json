@@ -4,7 +4,7 @@
     "photo": "Ruta de la foto1",
     "price": 200,
     "stock": 25,
-    "id": "cb25e6146f31e8a4122419e1"
+    "id": "816f5c313d0241824a23b13f"
   },
   {
     "title": "Producto Prueba1",
@@ -47,12 +47,5 @@
     "price": 200,
     "stock": 25,
     "id": "aa8a043e85a6161f37a37b77"
-  },
-  {
-    "title": "Producto Prueba1",
-    "photo": "Ruta de la foto1",
-    "price": 200,
-    "stock": 25,
-    "id": "294390e38b743f09c4b2ddc1"
   }
 ]

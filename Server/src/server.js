@@ -13,7 +13,7 @@ const PORT = 8080;
 app
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
-  .use(express.static(__dirname + "public"))
+  .use(express.static(__dirname + "/public"))
   .use(morgan("dev"))
   .use("/", router)
   .use(errorHandler)

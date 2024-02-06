@@ -22,27 +22,14 @@ class UserManager {
 
   async create(user) {
     try {
-      if (
-        this.users.some((e) => e.email === user.email) !== true &&
-        user.name !== "" &&
-        user.photo !== ""
-      ) {
-        const id = crypto.randomBytes(12).toString("hex");
-        const data = [...this.users, { ...user, id: id }];
-        const writeData = await fs.promises.writeFile(
-          this.path,
-          JSON.stringify(data, null, 2)
-        );
-        console.log(`Usuario agregado con el id: ${id}`);
-        return id;
-      } else {
-        const log = this.users.some((e) => e.email === user.email)
-          ? console.log("Este email ya esta registrado")
-          : console.log("Todos los campos son obligatorios");
-      }
+      const id = crypto.randomBytes(12).toString("hex");
+      const data = [...this.users, { ...user, id: id }];
+      await fs.promises.writeFile(this.path, JSON.stringify(data, null, 2));
+      console.log(`Usuario agregado con el id: ${id}`);
+      return id;
     } catch (error) {
       console.log(error);
-      return error.message;
+      throw error;
     }
   }
 
@@ -57,7 +44,7 @@ class UserManager {
       }
     } catch (error) {
       console.log(error);
-      return error.message;
+      throw error;
     }
   }
 
@@ -70,10 +57,11 @@ class UserManager {
         return user;
       } else {
         console.log(`No se encontro el usuario con el id ${id}`);
+        return null;
       }
     } catch (error) {
       console.log(error);
-      return error.message;
+      throw error;
     }
   }
 
@@ -82,22 +70,42 @@ class UserManager {
   async destroy(id) {
     try {
       const user = this.users.find((u) => u.id === id);
-      if (product) {
+      if (user) {
         this.users = this.users.filter((u) => u.id !== id);
         await fs.promises.writeFile(
           this.path,
           JSON.stringify(this.users, null, 2)
         );
         console.log("Eliminado con exito");
-        return user;
+        return null;
       } else {
         console.log("No hay un usuario con ese id");
       }
     } catch (error) {
       console.log(error);
-      return error.message;
+      throw error;
+    }
+  }
+
+  //___________________ Actualizo un usuario por su id ___________________
+
+  async update(id, data) {
+    try {
+      const index = this.users.findIndex((p) => p.id === id);
+      if (index !== -1) {
+        this.users[index] = { ...this.users[index], ...data };
+        await fs.promises.writeFile(
+          this.path,
+          JSON.stringify(this.users, null, 2)
+        );
+      } else {
+      }
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 }
+const users = new UserManager("./src/fs/files/users.json");
 
-export default UserManager;
+export default users;
