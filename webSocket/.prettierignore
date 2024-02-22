@@ -1,0 +1,11 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ignore all HTML files:
+**/*.html
+
+**/*.hbs
+**/*.handlebars
+/src/views/layouts/main.handlebars
+./src/views/layouts/main.handlebars
